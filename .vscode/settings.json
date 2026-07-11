@@ -7,5 +7,61 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 4
+  },
+  "[python]": {
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "prettier.tabWidth": 4
+  },
+  // "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "[html]": {
+    "editor.formatOnSaveMode": "file"
+  },
+  "github.copilot.enable": {
+    "html": true,
+    "markdown": true,
+    "shellscript": true,
+    "python": true,
+    "pip-requirements": true,
+    "typescript": true,
+    "typescriptreact": true
+  },
+  "git.openRepositoryInParentFolders": "always",
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.printWidth": 120,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue"
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#f7639c",
+    "activityBar.background": "#f7639c",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#78f42b",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#f7639c",
+    "statusBar.background": "#f5327d",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#f7639c",
+    "statusBarItem.remoteBackground": "#f5327d",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#f5327d",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#f5327d99",
+    "titleBar.inactiveForeground": "#e7e7e799"
   }
 }
