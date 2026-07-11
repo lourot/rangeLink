@@ -44,7 +44,7 @@
     "install-local": "./scripts/install-local.sh",
     "install-local:cursor": "./scripts/install-local.sh cursor",
     "install-local:vscode": "./scripts/install-local.sh vscode",
-    "package": "rm -rf *.vsix && ../../scripts/sync-assets.sh && rm -f rangelink-vscode-extension-*.vsix && vsce package --no-dependencies",
+    "package": "rm -rf *.vsix && ../../scripts/sync-assets.sh && rm -f rangelink-vscode-extension-*.vsix && PATH=\"$PWD/scripts/npm-shim:$PATH\" vsce package --no-dependencies",
     "publish:vsix": "./scripts/publish-from-vsix.sh",
     "release:lock": "./scripts/orchestrate-release-lock.sh",
     "release:prepare": "./scripts/finalize-release.sh",

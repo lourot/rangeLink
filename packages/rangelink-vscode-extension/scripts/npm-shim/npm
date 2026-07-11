@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# vsce hardcodes `npm run <script>` to execute the `vscode:prepublish` script
+# (see @vscode/vsce package.js prepublish()). npm itself is disabled in this
+# environment, so this shim intercepts that call and forwards it to pnpm.
+exec pnpm "$@"

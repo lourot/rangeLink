@@ -1,2 +1,84 @@
 packages:
-  - 'packages/*'
+  - packages/*
+
+overrides:
+  # Every target below is capped with an explicit upper bound at the next
+  # major version. pnpm applies overrides by full-range replacement, and
+  # re-runs the whole list against the result, so an unbounded target
+  # (`>=X.Y.Z` with no upper bound) intersects the *next* entry's source
+  # range too and keeps cascading until it lands on a completely unrelated,
+  # unbounded major (this broke `@babel/core`, bumped to 8.x, and
+  # `minimatch`, bumped to 10.x for a package pinned to `^3.0.4`). Keep
+  # every target bounded to the intended major so these stay pure security
+  # patch bumps.
+  '@babel/core@<=7.29.0': '>=7.29.6 <8'
+  '@isaacs/brace-expansion@<=5.0.0': '>=5.0.1 <6'
+  ajv@<6.14.0: '>=6.14.0 <7'
+  ajv@>=7.0.0-alpha.0 <8.18.0: '>=8.18.0 <9'
+  brace-expansion@<1.1.13: '>=1.1.13 <2'
+  brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3 <3'
+  brace-expansion@>=4.0.0 <5.0.5: '>=5.0.5 <6'
+  brace-expansion@>=5.0.0 <5.0.6: '>=5.0.6 <6'
+  diff@>=6.0.0 <8.0.3: '>=8.0.3 <9'
+  fast-uri@<=3.1.0: '>=3.1.1 <4'
+  fast-uri@<=3.1.1: '>=3.1.2 <4'
+  flatted@<3.4.0: '>=3.4.0 <4'
+  flatted@<=3.4.1: '>=3.4.2 <4'
+  form-data@>=4.0.0 <4.0.6: '>=4.0.6 <5'
+  glob@>=11.0.0 <11.1.0: '>=11.1.0 <12'
+  handlebars@>=4.0.0 <4.7.9: '>=4.7.9 <5'
+  handlebars@>=4.0.0 <=4.7.8: '>=4.7.9 <5'
+  handlebars@>=4.6.0 <=4.7.8: '>=4.7.9 <5'
+  js-yaml@<3.14.2: '>=3.14.2 <4'
+  js-yaml@<3.15.0: '>=3.15.0 <4'
+  js-yaml@>=4.0.0 <4.1.1: '>=4.1.1 <5'
+  js-yaml@>=4.0.0 <=4.1.1: '>=4.2.0 <5'
+  jws@<3.2.3: '>=3.2.3 <4'
+  linkify-it@<=5.0.0: '>=5.0.1 <6'
+  lodash@<=4.17.23: '>=4.18.0 <5'
+  lodash@>=4.0.0 <=4.17.22: '>=4.17.23 <5'
+  lodash@>=4.0.0 <=4.17.23: '>=4.18.0 <5'
+  markdown-it@<=14.1.1: '>=14.2.0 <15'
+  markdown-it@>=13.0.0 <14.1.1: '>=14.1.1 <15'
+  minimatch@<3.1.3: '>=3.1.3 <4'
+  minimatch@<3.1.4: '>=3.1.4 <4'
+  minimatch@>=10.0.0 <10.2.1: '>=10.2.1 <11'
+  minimatch@>=10.0.0 <10.2.3: '>=10.2.3 <11'
+  minimatch@>=9.0.0 <9.0.6: '>=9.0.6 <10'
+  minimatch@>=9.0.0 <9.0.7: '>=9.0.7 <10'
+  picomatch@<2.3.2: '>=2.3.2 <3'
+  picomatch@>=4.0.0 <4.0.4: '>=4.0.4 <5'
+  qs@<6.14.1: '>=6.14.1 <7'
+  qs@>=6.11.1 <=6.15.1: '>=6.15.2 <7'
+  qs@>=6.7.0 <=6.14.1: '>=6.14.2 <7'
+  serialize-javascript@<=7.0.2: '>=7.0.3 <8'
+  serialize-javascript@>=5.0.0 <7.0.5: '>=7.0.5 <8'
+  tmp@<0.2.6: '>=0.2.6 <1'
+  underscore@<=1.13.7: '>=1.13.8 <2'
+  undici@>=7.0.0 <7.18.2: '>=7.18.2 <8'
+  undici@>=7.0.0 <7.24.0: '>=7.24.0 <8'
+  undici@>=7.0.0 <7.28.0: '>=7.28.0 <8'
+  uuid@<11.1.1: '>=11.1.1 <12'
+  # Path overrides: force patched versions of transitive dev deps that pnpm's
+  # range-selector overrides can't reach (the parents request a spec that never
+  # intersects the vulnerable range, so `pkg@<range>` selectors are no-ops).
+  # Same-major bumps; all dev/test tooling only.
+  'readdirp>picomatch': 4.0.5
+  'eslint>ajv': 8.20.0
+  '@eslint/eslintrc>ajv': 8.20.0
+  '@istanbuljs/load-nyc-config>js-yaml': 4.3.0
+  '@textlint/linter-formatter>js-yaml': 4.3.0
+
+packageExtensions:
+  # babel-jest/ts-jest declare @babel/core as an optional peer with no other
+  # dependency in the graph resolving a concrete version. pnpm's optional-peer
+  # auto-install then grabs the latest published @babel/core (8.x) instead of
+  # honoring the `overrides` range above, breaking babel-plugin-istanbul
+  # (Jest's coverage instrumenter), which still requires Babel 7. Promoting it
+  # to a real dependency here forces resolution to respect the override.
+  babel-jest@29.7.0:
+    dependencies:
+      '@babel/core': '>=7.29.6 <8'
+  ts-jest@29.4.5:
+    dependencies:
+      '@babel/core': '>=7.29.6 <8'

@@ -50,12 +50,16 @@ fi
 echo "✓ Node.js version: $(node -v)"
 
 # Enable corepack
-echo "📦 Enabling pnpm via corepack..."
-npm run enable-pnpm
+# echo "📦 Enabling pnpm via corepack..."
+# npm run enable-pnpm
 
-# Install dependencies
+# Install dependencies (honor the committed lockfile - no silent version drift)
 echo "📥 Installing dependencies..."
-pnpm install
+pnpm install --frozen-lockfile
+
+# Audit dependencies for known vulnerabilities
+echo "🔒 Auditing dependencies..."
+pnpm audit
 
 # Build
 echo "🔨 Building TypeScript..."
